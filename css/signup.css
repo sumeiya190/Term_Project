@@ -1,0 +1,33 @@
+.navbar {
+    background-color: #228b22;
+}
+
+.navbar-nav .nav-link {
+    color: #0d0d0d;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #fff;
+    background-color: #0d0d0d;
+}
+
+.navbar-toggler {
+    border-color: #f5f5f5;
+}
+
+.navbar-toggler .navbar-toggler-icon {
+    color: #f5f5f5;
+}
+
+.navbar-nav .dropdown-menu {
+    background-color: #228b22;
+}
+
+.navbar-nav .dropdown-item {
+    color: #f5f5f5;
+}
+
+.navbar-nav .dropdown-item:hover {
+    color: #fff;
+    background-color: #0d0d0d;
+}
