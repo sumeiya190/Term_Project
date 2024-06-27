@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 26, 2024 at 06:25 AM
+-- Generation Time: Jun 26, 2024 at 05:18 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -27,42 +27,39 @@ USE `hamsy_biotech_inc`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `articles`
+-- Table structure for table `orderitems`
 --
 
-DROP TABLE IF EXISTS `articles`;
-CREATE TABLE `articles` (
-  `ArticleID` int(11) NOT NULL,
-  `Title` varchar(255) NOT NULL,
-  `Content` text NOT NULL,
-  `AuthorID` int(11) DEFAULT NULL,
-  `CreatedAt` timestamp NOT NULL DEFAULT current_timestamp()
+DROP TABLE IF EXISTS `orderitems`;
+CREATE TABLE IF NOT EXISTS `orderitems` (
+  `orderItemId` int(11) NOT NULL AUTO_INCREMENT,
+  `orderId` int(11) NOT NULL,
+  `productId` int(11) DEFAULT NULL,
+  `serviceId` int(11) DEFAULT NULL,
+  `quantity` int(11) NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`orderItemId`),
+  KEY `orderId` (`orderId`),
+  KEY `productId` (`productId`),
+  KEY `serviceId` (`serviceId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Truncate table before insert `articles`
---
-
-TRUNCATE TABLE `articles`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `genders`
+-- Table structure for table `orders`
 --
 
-DROP TABLE IF EXISTS `genders`;
-CREATE TABLE `genders` (
-  `roleId` int(1) NOT NULL,
-  `role` varchar(20) NOT NULL DEFAULT '',
-  `datecreated` datetime NOT NULL DEFAULT current_timestamp(),
-  `dateupdated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+DROP TABLE IF EXISTS `orders`;
+CREATE TABLE IF NOT EXISTS `orders` (
+  `orderId` int(11) NOT NULL AUTO_INCREMENT,
+  `userId` bigint(20) NOT NULL,
+  `totalPrice` decimal(10,2) NOT NULL,
+  `orderDate` datetime DEFAULT current_timestamp(),
+  PRIMARY KEY (`orderId`),
+  KEY `userId` (`userId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Truncate table before insert `genders`
---
-
-TRUNCATE TABLE `genders`;
 -- --------------------------------------------------------
 
 --
@@ -70,47 +67,31 @@ TRUNCATE TABLE `genders`;
 --
 
 DROP TABLE IF EXISTS `products`;
-CREATE TABLE `products` (
-  `ProductID` int(11) NOT NULL,
-  `Name` varchar(50) NOT NULL,
-  `Description` varchar(100) DEFAULT NULL,
-  `Price` decimal(10,2) NOT NULL,
-  `CreatedAt` timestamp NOT NULL DEFAULT current_timestamp()
+CREATE TABLE IF NOT EXISTS `products` (
+  `productId` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `description` text DEFAULT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `availability` enum('in_stock','out_of_stock','pre_order') NOT NULL,
+  `quantity` int(11) NOT NULL,
+  PRIMARY KEY (`productId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Truncate table before insert `products`
---
-
-TRUNCATE TABLE `products`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `role`
+-- Table structure for table `services`
 --
 
-DROP TABLE IF EXISTS `role`;
-CREATE TABLE `role` (
-  `roleId` int(1) NOT NULL,
-  `role` varchar(20) NOT NULL DEFAULT '',
-  `datecreated` datetime NOT NULL DEFAULT current_timestamp(),
-  `dateupdated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+DROP TABLE IF EXISTS `services`;
+CREATE TABLE IF NOT EXISTS `services` (
+  `serviceId` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `description` text DEFAULT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `availability` enum('available','not_available') NOT NULL,
+  PRIMARY KEY (`serviceId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Truncate table before insert `role`
---
-
-TRUNCATE TABLE `role`;
---
--- Dumping data for table `role`
---
-
-INSERT INTO `role` (`roleId`, `role`, `datecreated`, `dateupdated`) VALUES
-(1, 'Author', '2024-06-26 07:21:19', '2024-06-26 07:21:19'),
-(2, 'Editor', '2024-06-26 07:21:19', '2024-06-26 07:21:19'),
-(3, 'Publisher', '2024-06-26 07:21:19', '2024-06-26 07:21:19'),
-(4, 'Proofreader', '2024-06-26 07:21:19', '2024-06-26 07:21:19');
 
 -- --------------------------------------------------------
 
@@ -119,94 +100,32 @@ INSERT INTO `role` (`roleId`, `role`, `datecreated`, `dateupdated`) VALUES
 --
 
 DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users` (
-  `userId` bigint(10) NOT NULL,
-  `fullname` varchar(50) DEFAULT NULL,
-  `email` varchar(50) NOT NULL DEFAULT '',
-  `username` varchar(50) NOT NULL DEFAULT '',
-  `passsword` varchar(60) DEFAULT NULL,
-  `roleId` tinyint(1) NOT NULL DEFAULT 0,
-  `genderId` tinyint(1) NOT NULL DEFAULT 0,
-  `datecreated` datetime DEFAULT current_timestamp()
+CREATE TABLE IF NOT EXISTS `users` (
+  `userId` bigint(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  PRIMARY KEY (`userId`),
+  UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Truncate table before insert `users`
---
-
-TRUNCATE TABLE `users`;
---
--- Indexes for dumped tables
+-- Constraints for dumped tables
 --
 
 --
--- Indexes for table `articles`
+-- Constraints for table `orderitems`
 --
-ALTER TABLE `articles`
-  ADD PRIMARY KEY (`ArticleID`),
-  ADD UNIQUE KEY `AuthorID` (`AuthorID`);
+ALTER TABLE `orderitems`
+  ADD CONSTRAINT `orderitems_ibfk_1` FOREIGN KEY (`orderId`) REFERENCES `orders` (`orderId`),
+  ADD CONSTRAINT `orderitems_ibfk_2` FOREIGN KEY (`productId`) REFERENCES `products` (`productId`),
+  ADD CONSTRAINT `orderitems_ibfk_3` FOREIGN KEY (`serviceId`) REFERENCES `services` (`serviceId`);
 
 --
--- Indexes for table `genders`
+-- Constraints for table `orders`
 --
-ALTER TABLE `genders`
-  ADD PRIMARY KEY (`roleId`),
-  ADD UNIQUE KEY `role` (`role`);
-
---
--- Indexes for table `products`
---
-ALTER TABLE `products`
-  ADD PRIMARY KEY (`ProductID`);
-
---
--- Indexes for table `role`
---
-ALTER TABLE `role`
-  ADD PRIMARY KEY (`roleId`),
-  ADD UNIQUE KEY `role` (`role`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`userId`),
-  ADD UNIQUE KEY `email` (`email`),
-  ADD UNIQUE KEY `username` (`username`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `articles`
---
-ALTER TABLE `articles`
-  MODIFY `ArticleID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `genders`
---
-ALTER TABLE `genders`
-  MODIFY `roleId` int(1) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `products`
---
-ALTER TABLE `products`
-  MODIFY `ProductID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `role`
---
-ALTER TABLE `role`
-  MODIFY `roleId` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `userId` bigint(10) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `orders`
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
