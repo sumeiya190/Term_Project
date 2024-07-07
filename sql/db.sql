@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 27, 2024 at 10:16 AM
+-- Generation Time: Jul 07, 2024 at 02:23 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -102,7 +102,7 @@ INSERT INTO `products` (`productId`, `name`, `description`, `price`, `availabili
 (3, 'Patient Monitoring Devices', 'Devices that continuously monitor patients vital signs and provide real-time data to healthcare providers.', 10000.00, 'in_stock', 50),
 (4, 'Diagnostic Equipment', 'Equipment used for diagnosing medical conditions including X-ray machines, ECG machines, and lab analyzers.', 30000.00, 'out_of_stock', 0),
 (5, 'Remote Consultation Devices', 'Devices that enable healthcare providers to conduct remote consultations with patients including telemedicine carts and video conferencing tools.', 8000.00, 'in_stock', 20),
-(6, 'Rehabilitation Robots', 'Robotic devices that assist patients in their rehabilitation exercises helping them regain movement and strength.', 20000.00, 'pre_order', 15),
+(6, ' Rehabilitation Robots', 'Robotic devices that assist patients in their rehabilitation exercises helping them regain movement and strength.', 20000.00, 'pre_order', 15),
 (7, 'Assisted Living Devices', 'Devices designed to assist elderly or disabled individuals in their daily activities, such as mobility aids and smart home devices.', 5000.00, 'in_stock', 30);
 
 -- --------------------------------------------------------
@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `services` (
   `price` decimal(10,2) NOT NULL,
   `availability` enum('available','not_available') NOT NULL,
   PRIMARY KEY (`serviceId`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Truncate table before insert `services`
@@ -131,7 +131,7 @@ TRUNCATE TABLE `services`;
 --
 
 INSERT INTO `services` (`serviceId`, `name`, `description`, `price`, `availability`) VALUES
-(1, ' Electronic Health Record Systems ', 'A comprehensive electronic system for managing patient health records, ensuring secure and easy access to patient data for healthcare providers.', 10000.00, 'available'),
+(1, 'Electronic Health Record Systems', 'A comprehensive electronic system for managing patient health records, ensuring secure and easy access to patient data for healthcare providers.', 10000.00, 'available'),
 (2, 'Practice Management Software', 'Software designed to streamline administrative and clinical operations for medical practices, including appointment scheduling, billing, and patient management.', 50000.00, 'available'),
 (3, 'Health Analytics Software', 'Software that utilizes data analysis and predictive analytics to provide insights into patient health trends, outcomes, and resource utilization.', 60000.00, 'available'),
 (4, 'Remote Monitoring Devices', 'Devices used for monitoring patients health conditions remotely, providing real-time data to healthcare providers for timely interventions.', 20000.00, 'available'),
@@ -165,8 +165,8 @@ TRUNCATE TABLE `users`;
 INSERT INTO `users` (`userId`, `name`, `email`, `password`) VALUES
 (1, 'Alex', 'alexkamu@gmail.com', '123456@'),
 (2, 'Kamau', 'kamuu124@gmail.com', '123456#'),
-(3, 'Jane ', 'janee345@gmail.com', '123456$'),
-(4, 'Kevin', 'kevoq234@gmail.com', '123456%');
+(3, 'Jane', 'janee345@gmail.com', '123456$'),
+(4, 'Kevin', 'kevin234@gmail.com', '123456%');
 
 --
 -- Constraints for dumped tables
