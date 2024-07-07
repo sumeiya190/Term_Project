@@ -57,27 +57,3 @@ CREATE TABLE IF NOT EXISTS orderItems (
   FOREIGN KEY (productId) REFERENCES products (productId),
   FOREIGN KEY (serviceId) REFERENCES services (serviceId)
 );
-
-
-INSERT INTO products (productId, name, description, price, availability, quantity) VALUES
-(NULL, Advanced Imaging Systems, High-resolution imaging systems used for detailed internal examinations, including MRI, CT, and ultrasound machines., 50000.00, in_stock, 10),
-(NULL, Surgical Robotics, Robotic systems that assist surgeons in performing precise and minimally invasive surgeries., 150000.00, pre_order, 5),
-(NULL, Patient Monitoring Devices, Devices that continuously monitor patients vital signs and provide real-time data to healthcare providers., 10000.00, in_stock, 50),
-(NULL, Diagnostic Equipment, Equipment used for diagnosing medical conditions including X-ray machines, ECG machines, and lab analyzers., 30000.00, out_of_stock, 0),
-(NULL, Remote Consultation Devices, Devices that enable healthcare providers to conduct remote consultations with patients including telemedicine carts and video conferencing tools., 8000.00, in_stock, 20),
-(NULL, Rehabilitation Robots, Robotic devices that assist patients in their rehabilitation exercises helping them regain movement and strength., 20000.00, pre_order, 15),
-(NULL, Assisted Living Devices, Devices designed to assist elderly or disabled individuals in their daily activities, such as mobility aids and smart home devices., 5000.00, in_stock, 30);
-
-INSERT INTO services (serviceId, name, description, price, availability) VALUES
-(NULL, Electronic Health Record Systems, A comprehensive electronic system for managing patient health records, ensuring secure and easy access to patient data for healthcare providers., 10000.00, available),
-(NULL, Practice Management Software, Software designed to streamline administrative and clinical operations for medical practices, including appointment scheduling, billing, and patient management., 50000.00, available),
-(NULL, Health Analytics Software, Software that utilizes data analysis and predictive analytics to provide insights into patient health trends, outcomes, and resource utilization., 60000.00, available),
-(NULL, Remote Monitoring Devices, Devices used for monitoring patients health conditions remotely, providing real-time data to healthcare providers for timely interventions., 20000.00, available),
-(NULL, AI-powered Diagnosis Assistance, Advanced AI algorithms that assist healthcare providers in diagnosing medical conditions based on patient data and medical literature., 40000.00, available);
-
-
-INSERT INTO users (userId, name, email, password) VALUES
-(1, Alex, alexkamu@gmail.com,  123456@),
-(2, Kamau, kamuu124@gmail.com, 123456#),
-(3, Jane, janee345@gmail.com, 123456$),
-(4, Kevin, kevoq234@gmail.com, 123456%);
