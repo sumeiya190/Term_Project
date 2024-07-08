@@ -25,8 +25,11 @@
                     <input type="number" id="quantity" name="quantity">
                     <br><br>
                     <label for="availability">Availability:</label>
-                    <select id="availability" name="availability">
-
+                    <select id="availability" name="">
+                        <option value=""></option>
+                        <option value="pre_order">pre_order</option>
+                        <option value="in_stock">in_stock</option>
+                        <option value="out_of__stock">out_of__stock</option>
                     </select>
                     <br><br>
 
